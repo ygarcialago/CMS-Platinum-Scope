@@ -17,12 +17,14 @@ import { WarningModal } from './components/warningModal';
 import { buildReviewJson } from './utils/jsonBuilder';
 import { handleAddReview, handleImageRelativePath } from './hooks/electronHooks';
 import type { SelectedImage } from './types/imageType';
+import { GameTag } from './enums/GameTags';
 
 function App() {
   let filePath: string = "";
   const minRequirements = useRequirementsForm()
   const recRequirements = useRequirementsForm();
   const form = useReviewForm()
+  const [selectedTags, setSelectedTags] = useState<GameTag[]>([]);
   const [titulo, setTitulo] = useState("");
   const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
   const [isPreSaveModalOpen, setIsPreSaveModalOpen] = useState(false);
@@ -98,6 +100,7 @@ function App() {
       id: slug,
       titulo,
       imagen: finalImagePath,
+      tags: selectedTags,
       fichaTecnica: fichaTecnica,
       opinion: form,
       recursos: resourceForm.recursos,
@@ -172,6 +175,48 @@ function App() {
           {selectedImage?.name ?? "Seleccionar imagen"}
         </button>
         <br />
+
+        
+      <div className="mb-10">
+        <label className="text-lg font-medium text-gray-700 block mb-2">GameTags</label>
+        <select
+          className="border border-gray-500 rounded px-3 py-2 bg-white text-purple-400"
+          onChange={(e) => {
+            const val = e.target.value as GameTag;
+            if (val && !selectedTags.includes(val)) {
+              setSelectedTags([...selectedTags, val]);
+            }
+            e.target.value = "";
+          }}
+        >
+          <option value="">
+            + Añadir etiqueta...
+            </option>
+          {Object.entries(GameTag).map(([key, value]) => (
+            <option key={key} value={value}>
+              {key.replace(/_/g, ' ')}
+            </option>
+          ))}
+        </select>
+
+        <div className="flex flex-wrap gap-2 mt-3">
+          {selectedTags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-purple-100 text-purple-700 px-3 py-1 rounded-lg text-sm font-semibold flex items-center gap-2"
+            >
+              {tag}
+              <button
+                onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}
+                className="text-purple-900 hover:text-red-500"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+
+      </div>
 
         <label className="text-lg font-medium text-gray-700">
           Ficha técnica
