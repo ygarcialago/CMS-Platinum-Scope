@@ -11,7 +11,16 @@ export function useRequirementsForm() {
     const [notas, setNotas] = useState("");
     const isValid = () =>
         [so, cpu, ram, gpu, disco].every(v => v.trim());
-
+    const reset = () => {
+        setCpu("")
+        setDirectx("")
+        setDisco("")
+        setGpu("")
+        setNotas("")
+        setRam("")
+        setRed("")
+        setSO("")
+    }
     return {
         so, setSO,
         cpu, setCpu,
@@ -21,6 +30,6 @@ export function useRequirementsForm() {
         red, setRed,
         disco, setDisco,
         notas, setNotas,
-        isValid
+        isValid, reset
     };
 }

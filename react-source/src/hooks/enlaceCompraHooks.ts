@@ -27,5 +27,10 @@ export function useEnlacesCompra() {
     );
   };
 
-  return { enlacesCompra, addEnlaceCompra, removeEnlaceCompra, updateEnlaceCompra };
+   const reset = () => {
+    setEnlacesCompra([])
+  }
+
+
+  return { enlacesCompra, addEnlaceCompra, removeEnlaceCompra, updateEnlaceCompra, reset };
 }

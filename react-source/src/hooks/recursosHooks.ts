@@ -45,5 +45,9 @@ export function useRecursos() {
     );
   };
 
-  return { recursos, addRecurso, removeRecurso, updateRecurso };
+  const reset = () => {
+    setRecursos([])
+  }
+
+  return { recursos, addRecurso, removeRecurso, updateRecurso, reset };
 }
