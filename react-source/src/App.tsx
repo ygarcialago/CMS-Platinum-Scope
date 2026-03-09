@@ -20,24 +20,45 @@ import type { SelectedImage } from './types/imageType';
 import { GameTag } from './enums/GameTags';
 
 function App() {
-  let filePath: string = "";
-  const minRequirements = useRequirementsForm()
-  const recRequirements = useRequirementsForm();
-  const form = useReviewForm()
-  const [selectedTags, setSelectedTags] = useState<GameTag[]>([]);
+  
   const [titulo, setTitulo] = useState("");
-  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
-  const [isPreSaveModalOpen, setIsPreSaveModalOpen] = useState(false);
+  let filePath: string = "";
+  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
+  const [selectedTags, setSelectedTags] = useState<GameTag[]>([]);
   const [desarrollador, setDesarrollador] = useState("");
   const [plataformas, setPlataformas] = useState("");
   const [editor, setEditor] = useState("");
+
+  const minRequirements = useRequirementsForm()
+  const recRequirements = useRequirementsForm();
+  const resourceForm = useRecursos()
+  const enlacesCompraForm = useEnlacesCompra()
+  const form = useReviewForm()
+
+  const [isWarningModalOpen, setIsWarningModalOpen] = useState(false);
+  const [isPreSaveModalOpen, setIsPreSaveModalOpen] = useState(false);
+
   const [jsonPath, setJsonPath] = useState("");
   const [imagesFolder, setImagesFolder] = useState("");
   const [gitRootPath, setGitRootPath] = useState("");
-  const [selectedImage, setSelectedImage] = useState<SelectedImage | null>(null);
-  const resourceForm = useRecursos()
-  const enlacesCompraForm = useEnlacesCompra()
+
   const slug = titulo.toLowerCase().replace(/\s+/g, "_");
+
+  const resetForm = () => {
+    setTitulo("");
+    setSelectedImage(null);
+    setSelectedTags([]);
+    setPlataformas("");
+    setDesarrollador("");
+    setEditor("");
+
+    minRequirements.reset()
+    recRequirements.reset()
+    resourceForm.reset()
+    enlacesCompraForm.reset()
+    form.reset()
+
+  };
 
 
   const handleFinalSave = async (jsonPath: string) => {
@@ -108,6 +129,10 @@ function App() {
     });
 
     await handleAddReview(review, jsonPath);
+
+    resetForm()
+
+    alert("Review guardada")
   };
 
 
@@ -176,47 +201,47 @@ function App() {
         </button>
         <br />
 
-        
-      <div className="mb-10">
-        <label className="text-lg font-medium text-gray-700 block mb-2">GameTags</label>
-        <select
-          className="border border-gray-500 rounded px-3 py-2 bg-white text-purple-400"
-          onChange={(e) => {
-            const val = e.target.value as GameTag;
-            if (val && !selectedTags.includes(val)) {
-              setSelectedTags([...selectedTags, val]);
-            }
-            e.target.value = "";
-          }}
-        >
-          <option value="">
-            + Añadir etiqueta...
-            </option>
-          {Object.entries(GameTag).map(([key, value]) => (
-            <option key={key} value={value}>
-              {key.replace(/_/g, ' ')}
-            </option>
-          ))}
-        </select>
 
-        <div className="flex flex-wrap gap-2 mt-3">
-          {selectedTags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-purple-100 text-purple-700 px-3 py-1 rounded-lg text-sm font-semibold flex items-center gap-2"
-            >
-              {tag}
-              <button
-                onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}
-                className="text-purple-900 hover:text-red-500"
+        <div className="mb-10">
+          <label className="text-lg font-medium text-gray-700 block mb-2">GameTags</label>
+          <select
+            className="border border-gray-500 rounded px-3 py-2 bg-white text-purple-400"
+            onChange={(e) => {
+              const val = e.target.value as GameTag;
+              if (val && !selectedTags.includes(val)) {
+                setSelectedTags([...selectedTags, val]);
+              }
+              e.target.value = "";
+            }}
+          >
+            <option value="">
+              + Añadir etiqueta...
+            </option>
+            {Object.entries(GameTag).map(([key, value]) => (
+              <option key={key} value={value}>
+                {key.replace(/_/g, ' ')}
+              </option>
+            ))}
+          </select>
+
+          <div className="flex flex-wrap gap-2 mt-3">
+            {selectedTags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-purple-100 text-purple-700 px-3 py-1 rounded-lg text-sm font-semibold flex items-center gap-2"
               >
-                ×
-              </button>
-            </span>
-          ))}
-        </div>
+                {tag}
+                <button
+                  onClick={() => setSelectedTags(selectedTags.filter(t => t !== tag))}
+                  className="text-purple-900 hover:text-red-500"
+                >
+                  ×
+                </button>
+              </span>
+            ))}
+          </div>
 
-      </div>
+        </div>
 
         <label className="text-lg font-medium text-gray-700">
           Ficha técnica
