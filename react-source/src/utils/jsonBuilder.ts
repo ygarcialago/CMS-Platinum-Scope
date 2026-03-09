@@ -1,5 +1,6 @@
 import { useRequirementsForm } from "../constants/requisitosConstants";
 import { useReviewForm } from "../constants/opinionConstants";
+import type { GameTag } from "../enums/GameTags";
 
 function serializeHookData<T extends Record<string, any>>(hookObj: T, skipKeys: string[] = []) {
   return Object.fromEntries(
@@ -16,6 +17,7 @@ export function buildReviewJson(options: {
   id: string;
   titulo: string;
   imagen: string;
+  tags: GameTag[];
   fichaTecnica: {
     plataformas?: string;
     desarrollador?: string;
@@ -51,6 +53,7 @@ export function buildReviewJson(options: {
       id: options.id,
       titulo: options.titulo,
       imagen: options.imagen,
+      tags: options.tags,
       ficha_tecnica: {
         plataformas: options.fichaTecnica.plataformas,
         desarrollador: options.fichaTecnica.desarrollador,
