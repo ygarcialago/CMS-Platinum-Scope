@@ -55,6 +55,15 @@ export function TextAreaSetsOpinion({ form }: Props) {
             />
 
             <TextAreaSet
+                idTextArea="dlc"
+                labelText="DLCs"
+                onChangeFunction={handleInput}
+                varText={form.dlcs}
+                setVarText={form.setDlcs}
+                placeholderTextArea="¿Cómo son los dlcs?"
+            />
+
+            <TextAreaSet
                 idTextArea="conclusiones"
                 labelText="Conclusiones"
                 onChangeFunction={handleInput}

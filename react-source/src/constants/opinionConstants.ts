@@ -5,6 +5,7 @@ export function useReviewForm() {
   const [historia, setHistoria] = useState("");
   const [logros, setLogros] = useState("");
   const [mecanicas, setMecanicas] = useState("");
+  const [dlcs, setDlcs] = useState("");
   const [conclusiones, setConclusiones] = useState("");
   const isValid = () =>
     [sinopsis, historia, logros, mecanicas, conclusiones].every(v => v.trim());
@@ -14,6 +15,7 @@ export function useReviewForm() {
     historia, setHistoria,
     logros, setLogros,
     mecanicas, setMecanicas,
+    dlcs, setDlcs,
     conclusiones, setConclusiones,
     isValid
   };
