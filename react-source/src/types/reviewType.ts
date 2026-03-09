@@ -1,7 +1,10 @@
+import type { GameTag } from "../enums/GameTags";
+
 export interface Review {
   id: string;
   titulo: string;
   imagen: string;
+  tags: GameTag[];
   ficha_tecnica: {
     plataformas?: string;
     desarrollador?: string;
