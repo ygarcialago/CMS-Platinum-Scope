@@ -157,13 +157,6 @@ function App() {
           />
         </div>
 
-        {/*<ImagePicker
-          label='Imagen juego'
-          onSelect={(file) => {
-            console.log(file.name)
-            setSelectedImage(file)}}
-        />*/}
-
         <button
           className='mb-4'
           onClick={async () => {
