@@ -40,7 +40,23 @@ function createWindow() {
             preload: preloadPath,
             nodeIntegration: true,
             contextIsolation: true,
+            devTools: isDev
         }
+    });
+
+    win.webContents.on("before-input-event", (event, input) => {
+        if (
+            input.key === "F12" ||
+            (input.control && input.shift && input.key.toLowerCase() === "i") ||
+            (input.control && input.shift && input.key.toLowerCase() === "j") ||
+            (input.control && input.shift && input.key.toLowerCase() === "c")
+        ) {
+            event.preventDefault();
+        }
+    });
+
+    win.webContents.on("devtools-opened", () => {
+        win.webContents.closeDevTools();
     });
 
     win.maximize();
